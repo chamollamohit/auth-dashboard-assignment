@@ -2,6 +2,19 @@
 
 A full-stack authentication and task management dashboard built with Next.js, Prisma, and PostgreSQL. This application features secure user authentication, profile management, and a robust task tracking system.
 
+## 🔗 Live Demo
+
+**Check it out here:** [https://auth-dashboard-assignment-psi.vercel.app/](https://auth-dashboard-assignment-psi.vercel.app/)
+
+## 🧪 Demo Credentials
+
+Use these to test the dashboard immediately without signing up:
+
+- **Email:** `admin@gmail.com`
+- **Password:** `admin123`
+
+---
+
 ## Features
 
 - **User Authentication**: Secure signup, login, and logout functionality using JWT-based authentication.
@@ -47,7 +60,6 @@ A full-stack authentication and task management dashboard built with Next.js, Pr
     ```
 
 4. **Initialize Database:**
-
     ```bash
     npx prisma generate
     npx prisma db push
@@ -56,16 +68,14 @@ A full-stack authentication and task management dashboard built with Next.js, Pr
 ### Running the Application
 
 **Development Mode**
-
-    ```bash
+`bash
     npm run dev
-    ```
+    `
 
 **Using Docker**
-
-    ```bash
+`bash
     docker-compose up --build
-    ```
+    `
 
 ## Project Structure
 
