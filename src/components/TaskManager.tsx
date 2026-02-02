@@ -1,4 +1,5 @@
 "use client";
+import { CheckIcon, TrashIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -60,91 +61,84 @@ export default function DashboardPage() {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
-            <header>
-                <h2 className="text-2xl font-bold text-slate-900">
-                    Manage Tasks
+        <div className="space-y-4 animate-in fade-in duration-700">
+            <header className="space-y-2">
+                <h2 className="text-3xl font-black tracking-tight bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent">
+                    Your Workspace
                 </h2>
-                <p className="text-slate-500 text-sm">
-                    Organize your daily workflow efficiently.
+                <p className="text-zinc-500 font-medium">
+                    Focus on what matters today.
                 </p>
             </header>
 
-            {/* Control Panel */}
-            <section className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+            <section className="bg-[#121212] border border-zinc-800 p-6 rounded-[2rem] shadow-2xl space-y-6">
                 <form
                     onSubmit={addTask}
-                    className="flex gap-3">
+                    className="relative">
                     <input
                         type="text"
-                        placeholder="Add a new task..."
-                        className="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all"
+                        placeholder="What's the next big move?"
+                        className="w-full bg-[#1A1A1A] border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:border-[#D9FF41] focus:ring-1 focus:ring-[#D9FF41] outline-none transition-all placeholder:text-zinc-700"
                         value={newTask}
                         onChange={(e) => setNewTask(e.target.value)}
                     />
-                    <button className="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 active:scale-95 transition-all shadow-md shadow-blue-200">
+                    <button className="absolute right-2 top-2 bottom-2 bg-[#D9FF41] text-black px-6 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all">
                         Create
                     </button>
                 </form>
 
-                <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="relative flex-1">
-                        <input
-                            type="text"
-                            placeholder="Search title..."
-                            className="w-full pl-4 pr-4 py-2 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-600"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
+                <div className="flex gap-3">
+                    <input
+                        className="flex-1 bg-transparent border border-zinc-800 rounded-xl px-4 py-2 text-sm focus:border-zinc-500 outline-none"
+                        placeholder="Search projects..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
                     <select
-                        className="px-4 py-2 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-600"
+                        className="bg-[#1A1A1A] border border-zinc-800 rounded-xl px-4 py-2 text-sm text-zinc-400 outline-none"
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}>
-                        <option value="">All Tasks</option>
+                        <option value="">All Status</option>
                         <option value="PENDING">Pending</option>
-                        <option value="COMPLETED">Completed</option>
+                        <option value="COMPLETED">Done</option>
                     </select>
                 </div>
             </section>
 
-            {/* List Area */}
-            <div className="space-y-3">
-                {loading ? (
-                    <div className="text-center py-12 text-slate-400">
-                        Loading your workspace...
-                    </div>
-                ) : tasks.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-xl border-2 border-dashed border-slate-200 text-slate-500">
-                        No tasks found. Start by creating one above!
-                    </div>
-                ) : (
-                    tasks.map((task: any) => (
-                        <div
-                            key={task.id}
-                            className="group flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all">
-                            <div className="flex items-center gap-4">
-                                <input
-                                    type="checkbox"
-                                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                                    checked={task.status === "COMPLETED"}
-                                    onChange={() =>
-                                        toggleStatus(task.id, task.status)
-                                    }
-                                />
-                                <span
-                                    className={`font-medium transition-all ${task.status === "COMPLETED" ? "line-through text-slate-400" : "text-slate-700"}`}>
-                                    {task.title}
-                                </span>
-                            </div>
+            <div className="grid gap-4">
+                {tasks.map((task: any) => (
+                    <div
+                        key={task.id}
+                        className="group bg-[#121212]/50 border border-zinc-800/50 p-5 rounded-2xl flex items-center justify-between hover:bg-[#121212] hover:border-zinc-700 transition-all">
+                        <div className="flex items-center gap-5">
                             <button
-                                onClick={() => deleteTask(task.id)}
-                                className="opacity-0 cursor-pointer group-hover:opacity-100 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-600 transition-all">
-                                Remove
+                                onClick={() =>
+                                    toggleStatus(task.id, task.status)
+                                }
+                                className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                                    task.status === "COMPLETED"
+                                        ? "bg-[#D9FF41] border-[#D9FF41]"
+                                        : "border-zinc-700 hover:border-zinc-500"
+                                }`}>
+                                {task.status === "COMPLETED" && (
+                                    <CheckIcon
+                                        size={14}
+                                        className="text-black font-bold"
+                                    />
+                                )}
                             </button>
+                            <span
+                                className={`text-lg font-medium ${task.status === "COMPLETED" ? "text-zinc-600 line-through" : "text-zinc-200"}`}>
+                                {task.title}
+                            </span>
                         </div>
-                    ))
-                )}
+                        <button
+                            onClick={() => deleteTask(task.id)}
+                            className="opacity-0 group-hover:opacity-100 p-2 text-zinc-600 hover:text-red-400 transition-all">
+                            <TrashIcon size={18} />
+                        </button>
+                    </div>
+                ))}
             </div>
         </div>
     );

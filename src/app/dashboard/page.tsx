@@ -2,28 +2,45 @@
 import { useState } from "react";
 import TaskManager from "@/components/TaskManager";
 import ProfileSettings from "@/components/ProfileSettings";
+import { LayoutGrid, UserCircle } from "lucide-react";
 
 export default function DashboardPage() {
     const [activeTab, setActiveTab] = useState<"tasks" | "settings">("tasks");
 
     return (
-        <div className="space-y-6">
-            {/* Tab Navigation */}
-            <div className="flex border-b border-slate-200 gap-6">
+        <div className="space-y-10">
+            {/* Tab Navigation - Modern Dark Theme */}
+            <div className="flex items-center gap-8 border-b border-zinc-800/50">
                 <button
                     onClick={() => setActiveTab("tasks")}
-                    className={`pb-2 text-sm font-medium transition-all ${activeTab === "tasks" ? "border-b-2 border-blue-600 text-blue-600" : "text-slate-500 hover:text-slate-700"}`}>
-                    My Tasks
+                    className={`pb-4 text-xs font-bold uppercase flex items-center gap-2 relative ${
+                        activeTab === "tasks"
+                            ? "text-[#D9FF41]"
+                            : "text-zinc-500 hover:text-zinc-300"
+                    }`}>
+                    <LayoutGrid size={16} />
+                    My Workspace
+                    {activeTab === "tasks" && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D9FF41] shadow-[0_0_10px_rgba(217,255,65,0.5)]" />
+                    )}
                 </button>
+
                 <button
                     onClick={() => setActiveTab("settings")}
-                    className={`pb-2 text-sm font-medium transition-all ${activeTab === "settings" ? "border-b-2 border-blue-600 text-blue-600" : "text-slate-500 hover:text-slate-700"}`}>
+                    className={`pb-4 text-xs font-bold uppercase flex items-center gap-2 relative ${
+                        activeTab === "settings"
+                            ? "text-[#D9FF41]"
+                            : "text-zinc-500 hover:text-zinc-300"
+                    }`}>
+                    <UserCircle size={16} />
                     Profile Settings
+                    {activeTab === "settings" && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D9FF41] shadow-[0_0_10px_rgba(217,255,65,0.5)]" />
+                    )}
                 </button>
             </div>
 
-            {/* Conditional Rendering */}
-            <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div>
                 {activeTab === "tasks" ? <TaskManager /> : <ProfileSettings />}
             </div>
         </div>

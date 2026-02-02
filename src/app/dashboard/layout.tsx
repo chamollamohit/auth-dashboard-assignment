@@ -1,53 +1,34 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { verifyToken } from "@/lib/auth";
-import { db } from "@/lib/db";
 import LogoutButton from "@/components/LogoutButton";
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const token = (await cookies()).get("token")?.value;
-    const decoded = token ? (verifyToken(token) as { userId: string }) : null;
-    if (!decoded) redirect("/login");
-
-    const user = await db.user.findUnique({
-        where: { id: decoded.userId },
-        select: { name: true },
-    });
-
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-900">
-            <nav className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur-md">
-                <div className="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">
+        <div className="min-h-screen bg-[#0A0A0A] text-zinc-100 selection:bg-lime-400 selection:text-black">
+            {/* Background Glow */}
+            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-lime-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+            <nav className="sticky top-0 z-50 border-b border-zinc-800/50 bg-[#0A0A0A]/80 backdrop-blur-xl">
+                <div className="max-w-5xl mx-auto px-6 h-20 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-[#D9FF41] rounded-xl flex items-center justify-center rotate-3 shadow-[0_0_20px_rgba(217,255,65,0.2)]">
+                            <span className="text-black font-black text-xl">
                                 T
                             </span>
                         </div>
-                        <h1 className="text-lg font-bold tracking-tight text-slate-800">
-                            TaskMaster
-                        </h1>
+                        <span className="text-xl font-bold tracking-tighter">
+                            TASKMASTER
+                        </span>
                     </div>
-
-                    <div className="flex items-center gap-6">
-                        <div className="hidden sm:block text-right">
-                            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                Active User
-                            </p>
-                            <p className="text-sm font-semibold text-slate-800">
-                                {user?.name}
-                            </p>
-                        </div>
-                        <div className="h-8 w-px bg-slate-200" />
-                        <LogoutButton />
-                    </div>
+                    <LogoutButton />
                 </div>
             </nav>
-            <main className="p-6 max-w-4xl mx-auto">{children}</main>
+
+            <main className="relative z-10 p-6 max-w-5xl mx-auto">
+                {children}
+            </main>
         </div>
     );
 }

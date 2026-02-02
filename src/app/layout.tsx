@@ -26,11 +26,20 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0A0A0A] text-white min-h-screen font-sans`}>
                 {children}
                 <Toaster
-                    richColors
+                    theme="dark"
                     position="top-right"
+                    toastOptions={{
+                        style: {
+                            background: "#121212",
+                            border: "1px solid #D9FF41",
+                            color: "#D9FF41",
+                            borderRadius: "1rem",
+                        },
+                        className: "font-sans",
+                    }}
                 />
             </body>
         </html>
