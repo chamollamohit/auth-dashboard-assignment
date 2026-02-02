@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function SignupPage() {
     const [formData, setFormData] = useState({
@@ -24,6 +25,14 @@ export default function SignupPage() {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
+
+            if (res.ok) {
+                toast.success("Account Created!");
+                router.push("/dashboard");
+            } else {
+                toast.error(data.error || "Sign-Up failed");
+            }
+
             router.push("/login");
         } catch (err: any) {
             setError(err.message);

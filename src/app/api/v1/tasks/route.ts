@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth";
+import { getAuthUser } from "@/lib/checkAuth";
 
-async function getAuthUser() {
-    const token = (await cookies()).get("token")?.value;
-    if (!token) return null;
-    return verifyToken(token) as { userId: string } | null;
-}
+
+
 
 export async function GET(req: Request) {
     const user = await getAuthUser();

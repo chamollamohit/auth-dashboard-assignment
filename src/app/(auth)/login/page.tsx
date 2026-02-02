@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,6 +20,15 @@ export default function LoginPage() {
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
+
+            if (res.ok) {
+                toast.success("Welcome back!");
+                router.refresh();
+                router.push("/dashboard");
+            } else {
+                toast.error(data.error || "Login failed");
+            }
+
             if (!res.ok) throw new Error(data.error);
             router.push("/dashboard");
             router.refresh();
