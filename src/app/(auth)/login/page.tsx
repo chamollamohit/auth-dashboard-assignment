@@ -13,6 +13,12 @@ export default function LoginPage() {
         e.preventDefault();
         setLoading(true);
 
+        if (!formData.email || !formData.password) {
+            toast.error("All fields are required");
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await fetch("/api/v1/auth/login", {
                 method: "POST",

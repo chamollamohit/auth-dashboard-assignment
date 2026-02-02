@@ -28,7 +28,7 @@ export default function ProfileSettings() {
 
         if (res.ok) {
             toast.success("Identity updated");
-            router.refresh(); // This updates the name in the Navbar!
+            router.refresh();
         } else {
             toast.error("Update failed");
         }

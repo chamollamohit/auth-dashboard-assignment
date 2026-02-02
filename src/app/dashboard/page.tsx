@@ -9,7 +9,6 @@ export default function DashboardPage() {
 
     return (
         <div className="space-y-10">
-            {/* Tab Navigation - Modern Dark Theme */}
             <div className="flex items-center gap-8 border-b border-zinc-800/50">
                 <button
                     onClick={() => setActiveTab("tasks")}

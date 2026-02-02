@@ -2,17 +2,15 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { getAuthUser } from "@/lib/checkAuth";
 
 export async function GET() {
     try {
-        const token = (await cookies()).get("token")?.value;
+        const token = await getAuthUser();
         if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-        const decoded = verifyToken(token) as { userId: string } | null;
-        if (!decoded) return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-
         const user = await db.user.findUnique({
-            where: { id: decoded.userId },
+            where: { id: token.userId },
             select: { id: true, email: true, name: true, createdAt: true }
         });
 
@@ -41,6 +39,6 @@ export async function PUT(req: Request) {
 
         return NextResponse.json(updatedUser);
     } catch (error) {
-        return NextResponse.json({ error: "Update failed" }, { status: 500 });
+        return NextResponse.json({ error: "Profile Update failed" }, { status: 500 });
     }
 }

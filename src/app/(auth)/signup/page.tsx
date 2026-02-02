@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
+import { validateEmail, validatePassword } from "@/lib/validation";
 
 export default function SignupPage() {
     const [formData, setFormData] = useState({
@@ -17,8 +18,20 @@ export default function SignupPage() {
         e.preventDefault();
         setLoading(true);
 
-        if (formData.password.length < 6) {
-            toast.error("Password must be at least 6 characters");
+        if (!formData.name || !formData.email || !formData.password) {
+            toast.error("All fields are required");
+            setLoading(false);
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Please enter a valid email address");
+            setLoading(false);
+            return;
+        }
+
+        if (!validatePassword(formData.password)) {
+            toast.error("Password must be at least 6 characters long");
             setLoading(false);
             return;
         }
