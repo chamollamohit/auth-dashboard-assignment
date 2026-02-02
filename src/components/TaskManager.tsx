@@ -111,21 +111,25 @@ export default function DashboardPage() {
                     </button>
                 </form>
 
-                <div className="flex gap-3">
-                    <input
-                        className="flex-1 bg-transparent border border-zinc-800 rounded-xl px-4 py-2 text-sm focus:border-zinc-500 outline-none"
-                        placeholder="Search task..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <select
-                        className="bg-[#1A1A1A] border border-zinc-800 rounded-xl px-4 py-2 text-sm text-zinc-400 outline-none"
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value)}>
-                        <option value="">All Status</option>
-                        <option value="PENDING">Pending</option>
-                        <option value="COMPLETED">Done</option>
-                    </select>
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+                    <div className="relative w-full sm:flex-1">
+                        <input
+                            className="flex-1 w-full bg-transparent border border-zinc-800 rounded-xl px-4 py-2 text-sm focus:border-zinc-500 outline-none"
+                            placeholder="Search task..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+                    <div className="w-full sm:w-auto">
+                        <select
+                            className="bg-[#1A1A1A] border w-full border-zinc-800 rounded-xl px-4 py-2 text-sm text-zinc-400 outline-none"
+                            value={filter}
+                            onChange={(e) => setFilter(e.target.value)}>
+                            <option value="">All Status</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="COMPLETED">Done</option>
+                        </select>
+                    </div>
                 </div>
             </section>
 
